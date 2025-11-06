@@ -23,7 +23,7 @@ jobs:
 
     - name: Track large file with Git LFS # 第四步：使用Git LFS跟踪大文件
       run: |
-        git lfs track "novaAnimeXL_ilV125.safetensors"
+        # git lfs track "novaAnimeXL_ilV125.safetensors"
         git add .gitattributes
         git add novaAnimeXL_ilV125.safetensors
 
