@@ -19,7 +19,7 @@ jobs:
       - name: Add large file
         run: |
           # 这里添加你的大文件，比如从其他地方下载
-          wget -O novaAnimeXL_ilV125.safetensors "你的文件URL"
+          wget -O novaAnimeXL_ilV125.safetensors 'https://civitai-delivery-worker-prod.5ac0637cfd0766c97916cefa3764fbdf.r2.cloudflarestorage.com/model/2515131/novaanimeilv125.N3BI.safetensors?X-Amz-Expires=86400&response-content-disposition=attachment%3B%20filename%3D%22novaAnimeXL_ilV125.safetensors%22&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=e01358d793ad6966166af8b3064953ad/20251105/us-east-1/s3/aws4_request&X-Amz-Date=20251105T141541Z&X-Amz-SignedHeaders=host&X-Amz-Signature=fdf3b51ff43e39fccfff281911c5e829335081bfd2cfc35c9148f631c4e9925a'
           
       - name: Commit and push
         run: |
