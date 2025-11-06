@@ -4,31 +4,28 @@ on:
   workflow_dispatch: # 手动触发工作流
 
 jobs:
-  import-file:
-    runs-on: ubuntu-latest # 指定运行环境为最新的Ubuntu
-
+  upload:
+    runs-on: ubuntu-latest
     steps:
-    - name: Checkout repository # 第一步：检出仓库
-      uses: actions/checkout@v3 # 使用官方的checkout动作，版本为v3
-
-    - name: Install Git LFS # 第二步：安装Git LFS
-      run: |
-        curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
-        sudo apt-get install git-lfs
-        git lfs install
-
-    - name: Download file from URL # 第三步：从URL下载文件
-      run: |
-        wget --quiet -O novaAnimeXL_ilV125.safetensors 'https://civitai-delivery-worker-prod.5ac0637cfd0766c97916cefa3764fbdf.r2.cloudflarestorage.com/model/2515131/novaanimeilv125.N3BI.safetensors?X-Amz-Expires=86400&response-content-disposition=attachment%3B%20filename%3D%22novaAnimeXL_ilV125.safetensors%22&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=e01358d793ad6966166af8b3064953ad/20251105/us-east-1/s3/aws4_request&X-Amz-Date=20251105T141541Z&X-Amz-SignedHeaders=host&X-Amz-Signature=fdf3b51ff43e39fccfff281911c5e829335081bfd2cfc35c9148f631c4e9925a'
-
-    - name: Track large file with Git LFS # 第四步：使用Git LFS跟踪大文件
-      run: |
-        # git lfs track "novaAnimeXL_ilV125.safetensors"
-        git add novaAnimeXL_ilV125.safetensors
-
-    - name: Commit and push file # 第五步：提交并推送文件
-      run: |
-        git config --global user.name "github-actions"
-        git config --global user.email "github-actions@github.com"
-        git commit -m "Add file from link"
-        git push origin main
+      - uses: actions/checkout@v4
+        with:
+          lfs: true  # 关键：启用LFS
+          
+      - name: Setup Git LFS
+        run: |
+          git lfs install
+          git lfs track "*.safetensors"
+          
+      - name: Add large file
+        run: |
+          # 这里添加你的大文件，比如从其他地方下载
+          wget -O novaAnimeXL_ilV125.safetensors "你的文件URL"
+          
+      - name: Commit and push
+        run: |
+          git add .gitattributes
+          git add novaAnimeXL_ilV125.safetensors
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git commit -m "Add file from link"
+          git push origin main
